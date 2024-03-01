@@ -1,9 +1,8 @@
-namespace AulasAi.Search;
-
 using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.Runtime.InteropServices;
+using System.Linq;
+
+namespace AulasAi.Search;
 
 public static class Search
 {

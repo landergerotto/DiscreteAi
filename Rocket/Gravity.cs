@@ -1,3 +1,5 @@
+using System;
+
 namespace AulasAI.Rocket;
 
 public static class Gravity

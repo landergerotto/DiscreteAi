@@ -1,3 +1,5 @@
+using System;
+
 namespace AulasAI.Nuenv;
 
 public static class Integrate

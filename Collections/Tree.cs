@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace AulasAI.Collections;
 
 public class Tree<T>

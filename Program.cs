@@ -1,6 +1,7 @@
 ﻿using System;
 using AulasAI.Collections;
 using AulasAi.Search;
+using System.Collections.Generic;
 
 
 // TREE 1 (root: 50)

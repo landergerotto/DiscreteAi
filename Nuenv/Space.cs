@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+
 namespace AulasAI.Nuenv;
 
 public static class Space

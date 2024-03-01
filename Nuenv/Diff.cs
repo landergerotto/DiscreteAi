@@ -1,3 +1,5 @@
+using System;
+
 namespace AulasAI;
 
 public static class Diff

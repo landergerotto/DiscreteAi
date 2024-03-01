@@ -1,3 +1,5 @@
+using System;
+
 namespace AulasAI.Optimize;
 
 public static class Optimize
