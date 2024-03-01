@@ -7,14 +7,16 @@ using System.Runtime.InteropServices;
 
 public static class Search
 {
-    public static int BinarySearch<T>(IEnumerable<T> collection, T query, int begin = 0, int end = -1)
+    public static int BinarySearch<T>(IEnumerable<T> collection, T query, bool sorted = false)
     {
-        if (end == -1)
+        if (!sorted)
         {
             collection = (IEnumerable<T>)collection.ToArray().Clone();
             collection = Sort(collection);
-            end = collection.Count() - 1;
         }
+
+        int begin = 0;
+        int end = collection.Count() - 1;
 
         var comparer = Comparer<T>.Default;
 
@@ -32,7 +34,6 @@ public static class Search
                 begin = mid + 1;
             else
                 end = mid - 1;
-            
         }
 
         return -1; 
