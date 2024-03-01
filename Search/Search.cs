@@ -17,23 +17,25 @@ public static class Search
 
         int begin = 0;
         int end = collection.Count() - 1;
+        int mid = begin + (end - begin) / 2;
+        var midValue = collection.ElementAt(mid);
 
         var comparer = Comparer<T>.Default;
 
-        while (end - begin >= 0)
+        while (end >= begin)
         {
-            int mid = begin + (end - begin) / 2;
-            var midValue = collection.ElementAt(mid);
-            
             var comparison = comparer.Compare(query, midValue);
-
-            if (comparison == 0)
-                return mid;
 
             if (comparison > 0)
                 begin = mid + 1;
             else
                 end = mid - 1;
+
+            mid = begin + (end - begin) / 2;
+            midValue = collection.ElementAt(mid);
+
+            if (comparison == 0)
+                return mid;
         }
 
         return -1; 
