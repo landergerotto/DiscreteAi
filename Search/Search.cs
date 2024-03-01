@@ -3,34 +3,39 @@ namespace AulasAi.Search;
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using System.Runtime.InteropServices;
 
 public static class Search
 {
-    public static int BinarySearch<T>(IEnumerable<T> collection, T query)
+    public static int BinarySearch<T>(IEnumerable<T> collection, T query, int begin = 0, int end = -1)
     {
-        var comparer = Comparer<T>.Default; // 0: equal, > 0
-
-        int low = 0;
-        int high = collection.Count() - 1;
-
-        while (high - low > 1)
+        if (end == -1)
         {
-            var mid = low + (high - low) / 2;
+            collection = (IEnumerable<T>)collection.ToArray().Clone();
+            collection = Sort(collection);
+            end = collection.Count() - 1;
+        }
+
+        var comparer = Comparer<T>.Default;
+
+        while (end - begin >= 0)
+        {
+            int mid = begin + (end - begin) / 2;
             var midValue = collection.ElementAt(mid);
             
             var comparison = comparer.Compare(query, midValue);
 
+            if (comparison == 0)
+                return mid;
+
             if (comparison > 0)
-                low = mid;
-            
+                begin = mid + 1;
             else
-                high = mid;
+                end = mid - 1;
             
         }
 
-        return high; 
-
-        return 0;
+        return -1; 
     }
 
     public static IEnumerable<T> Sort<T>(IEnumerable<T> collection)
