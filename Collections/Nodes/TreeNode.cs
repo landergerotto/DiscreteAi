@@ -7,13 +7,13 @@ public class TreeNode<T> : INode<T>
 {
     public T Value { get; set; }
     public TreeNode<T> Parent { get; set; } // is null if it is root
-    public IEnumerable<TreeNode<T>?> Children { get; set; }
+    public IEnumerable<TreeNode<T>> Children { get; set; }
 
     public TreeNode(T value)
     {
         this.Value = value;
         this.Parent = null;
-        this.Children = null;
+        this.Children = Enumerable.Empty<TreeNode<T>>();
     }
 
     public TreeNode
@@ -72,9 +72,12 @@ public class TreeNode<T> : INode<T>
 
         result.AppendLine(Value?.ToString());
 
+
         for (int i = 0; i < this.Children.Count(); i++)
             result.Append(this.Children.ElementAt(i).ToString(indent, i == Children.Count() - 1, false));
 
         return result.ToString();
+
+
     }
 }
