@@ -21,7 +21,7 @@ public class TreeNode<T> : INode<T>
     (
         T value,
         TreeNode<T>? parent = null,
-        IEnumerable<TreeNode<T>> children = null
+        IEnumerable<TreeNode<T>> children = null!
     )
     {
         this.Value = value;
