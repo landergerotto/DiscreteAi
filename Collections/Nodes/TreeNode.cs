@@ -29,6 +29,19 @@ public class TreeNode<T> : INode<T>
         this.Children = children ?? Enumerable.Empty<TreeNode<T>>();
     }
 
+    public int GetHeight()
+    {
+        int height = 1;
+        var current = this;
+
+        while (current.Parent != null)
+        {
+            height++;
+            current = current.Parent;
+        }
+
+        return height;
+    }
 
     public TreeNode<T> AddChild(TreeNode<T> child)
     {
@@ -46,6 +59,14 @@ public class TreeNode<T> : INode<T>
         this.Children = this.Children.Where(x => x != child);
 
         return this;
+    }
+
+    public void ClearBranch()
+    {
+        foreach (var child in Children)
+            child.Parent = null;
+        
+        this.Children = Enumerable.Empty<TreeNode<T>>();
     }
 
     public override string ToString()

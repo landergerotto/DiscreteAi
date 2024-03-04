@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace AulasAi.Search;
 
-public static class Search
+public static partial class Search
 {
     public static int BinarySearch<T>(IEnumerable<T> collection, T query, bool sorted = false)
     {
