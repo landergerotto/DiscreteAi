@@ -5,10 +5,12 @@ using System.Text;
 
 namespace AulasAI.Collections;
 
-public class Graph<T> : Node<T>
+public class Graph<T> : GraphNode<T>
 {
-    public Graph(
-        T value = default,
-        IEnumerable<Node<T>> Neighbours = null
-    ) : base (value, Neighbours) { }
+    public List<GraphNode<T>> Nodes { get; set; }
+
+    public Graph(List<GraphNode<T>> nodes = null)
+    { 
+        this.Nodes = nodes ?? new List<GraphNode<T>>();
+    }
 }

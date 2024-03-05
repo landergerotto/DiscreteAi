@@ -8,16 +8,25 @@ namespace AulasAi.Search;
 
 public static partial class Search
 {
-    public static bool DepthFirstSearch<T>(TreeNode<T> node, T goal)
+    public static bool DepthFirstSearch<T, TNode>(SearchNode<T, TNode> node, T goal)
+        where TNode : INode<T>
     {
-        if (EqualityComparer<T>.Default.Equals(node.Value, goal))
-            return true;
+        if (node.WasVisited)
+            return false;
 
-        foreach (var currNode in node.Children)
-            if (DepthFirstSearch(currNode, goal))
-                return true;
-        
-    
-        return false;
+        node.WasVisited = true;
+
+        if (EqualityComparer<T>.Default.Equals(node.Node.Value, goal))
+        {
+            node.IsSolution = true;
+            return true;
+        }
+
+        var found = node.Connections().Any(neighbour => 
+            !neighbour.WasVisited && DepthFirstSearch(neighbour, goal)
+        );
+            
+
+        return found;
     }
 }

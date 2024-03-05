@@ -4,45 +4,46 @@ using System.Text;
 
 namespace AulasAI.Collections;
 
-public class Node<T> : INode<T>
+public class GraphNode<T> : INode<T>
 {
     public T                    Value       { get; set; }
-    public IEnumerable<Node<T>> Neighbours  { get; set; }
+    public IEnumerable<GraphNode<T>> Neighbours  { get; set; }
     public int                  Connections { get; set; }
 
-    public Node(T value)
+    public GraphNode(T value)
     {
-        this.Value = default;
-        this.Neighbours = Enumerable.Empty<Node<T>>();
+        this.Value = value;
+        this.Neighbours = Enumerable.Empty<GraphNode<T>>();
     }
 
-    public Node
+    public GraphNode
     (
         T value = default,
-        IEnumerable<Node<T>> children = null!
+        IEnumerable<GraphNode<T>> children = null!
     )
     {
         this.Value = value;
-        this.Neighbours = children ?? Enumerable.Empty<Node<T>>();
+        this.Neighbours = children ?? Enumerable.Empty<GraphNode<T>>();
 
         foreach (var neighbour in this.Neighbours)
         {
-            neighbour.Neighbours.Append(this);
+            if (!neighbour.Neighbours.Contains(this))
+                neighbour.Neighbours.Append(this);
         }
     }
 
-    public Node<T> AddNode(Node<T> node)
+    public GraphNode<T> AddNode(GraphNode<T> node)
     {
-        if (node is null)
-            return this;
+        if (!Neighbours.Contains(node))
+            this.Neighbours = this.Neighbours.Append(node);
 
-        this.Neighbours = this.Neighbours.Append(node);
-        node.Neighbours = node.Neighbours.Append(this);
+        if (!Neighbours.Contains(this))
+            node.Neighbours = node.Neighbours.Append(this);
 
         return this;
     }
 
-    public Node<T> RemoveNode(Node<T> node)
+    public GraphNode<T> RemoveNode(GraphNode<T> node)
     {
         this.Neighbours = this.Neighbours.Where(x => x != node);
         node.Neighbours = node.Neighbours.Where(x => x != this);
@@ -51,7 +52,7 @@ public class Node<T> : INode<T>
     }
 
     public void ClearConnections()
-        => this.Neighbours = Enumerable.Empty<Node<T>>();
+        => this.Neighbours = Enumerable.Empty<GraphNode<T>>();
     
 
     public override string ToString()

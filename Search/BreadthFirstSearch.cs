@@ -8,19 +8,28 @@ namespace AulasAi.Search;
 
 public static partial class Search
 {
-    public static bool BreadthFirstSearch<T>(TreeNode<T> node, T goal)
+    public static bool BreadthFirstSearch<T, TNode>(SearchNode<T, TNode> node, T goal)
+        where TNode : INode<T>
     {
-        var queue = new Queue<TreeNode<T>>();
+        var queue = new Queue<SearchNode<T, TNode>>();
         queue.Enqueue(node);
 
         while (queue.Count > 0)
         {   
             var currNode = queue.Dequeue();
 
-            if (EqualityComparer<T>.Default.Equals(currNode.Value, goal))
-                return true;
+            if (currNode.WasVisited)
+                continue;
 
-            foreach (var child in currNode.Children)
+            currNode.WasVisited = true;
+
+            if (EqualityComparer<T>.Default.Equals(currNode.Node.Value, goal))
+            {
+                currNode.IsSolution = true;
+                return true;
+            }
+
+            foreach (var child in currNode.Connections())
                 queue.Enqueue(child);
         }
 
