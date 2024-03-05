@@ -5,12 +5,21 @@ using System.Text;
 
 namespace AulasAI.Collections;
 
-public class Graph<T> : GraphNode<T>
+public class Graph<T, TNode>
 {
-    public List<GraphNode<T>> Nodes { get; set; }
-
-    public Graph(List<GraphNode<T>> nodes = null)
+    public List<TNode> Nodes { get; set; }
+    public Graph(List<TNode> nodes = null)
     { 
-        this.Nodes = nodes ?? new List<GraphNode<T>>();
+        this.Nodes = nodes ?? new List<TNode>();
+    }
+
+    public Graph<T, TNode> AddNode(TNode node)
+    {
+        if (!this.Nodes.Any(anyNode => 
+            EqualityComparer<TNode>.Default.Equals(anyNode, node))
+           )
+            this.Nodes.Add(node);
+
+        return this;
     }
 }

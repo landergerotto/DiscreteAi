@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using AulasAI.Collections;
+namespace AulasAI.Collections;
 
 public class SearchGraphNode<T> : SearchNode<T, GraphNode<T>>
 {
