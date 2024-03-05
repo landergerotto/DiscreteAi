@@ -7,12 +7,12 @@ using System.Collections.Generic;
 var tree5 = BuildTree();
 var graph = BuildGraph();
 var start = graph.Nodes[3];
-var end = graph.Nodes[3];
+var end = graph.Nodes[8];
 
 System.Console.WriteLine(start.Value.ToString());
 System.Console.WriteLine(end.Value.ToString());
 
-var found = Search.DepthFirstSearch
+var found = Search.BreadthFirstSearch
 (
     new SearchGraphNode<string>(start),
     end.Value
